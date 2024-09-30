@@ -107,7 +107,7 @@ def initialize_centers():
     elif method == "KMeans++":
         selected_centers = generate_centers_kmeans_plus_plus(k, points)
     
-    print(f"Initialized centers (k={k}, method={method}): {selected_centers}")
+    # print(f"Initialized centers (k={k}, method={method}): {selected_centers}")
     point_colors = assign_colors(selected_centers, points)
     img_base64 = plot_graph(selected_centers, points, point_colors)
     return jsonify({'image': img_base64})
@@ -118,7 +118,7 @@ def initialize_centers_manual():
     data = request.json
     centers = data['centers']
     selected_centers = np.array([[center['x'], center['y']] for center in centers])
-    print(f"Manually initialized centers: {selected_centers}")
+    # print(f"Manually initialized centers: {selected_centers}")
     point_colors = assign_colors(selected_centers, points)
     img_base64 = plot_graph(selected_centers, points, point_colors)
     return jsonify({'image': img_base64})
@@ -137,7 +137,7 @@ def update_plot_with_center():
 @app.route('/step_kmeans', methods=['POST'])
 def step_kmeans():
     global selected_centers, points, point_colors
-    print(f"Step KMeans - selected_centers: {selected_centers}, points: {points}, point_colors: {point_colors}")
+    # print(f"Step KMeans - selected_centers: {selected_centers}, points: {points}, point_colors: {point_colors}")
     if selected_centers is not None and points is not None and point_colors is not None:
         new_centers = recalculate_centers(selected_centers, points, point_colors)
         
