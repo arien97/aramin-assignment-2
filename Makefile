@@ -1,29 +1,22 @@
-# Define your Flask app and React app entry point
+# Define your Flask app
 FLASK_APP = server.py
-REACT_APP_DIR = src
-NPM_CMD = npm install
 
-# Install Python dependencies
-install:
-	@echo "Installing Python dependencies..."
+install: 
 	pip install flask flask-cors numpy matplotlib
+	npm install
 
-# Install npm dependencies
-npm-install:
-	@echo "Installing npm dependencies..."
-	cd $(REACT_APP_DIR) && $(NPM_CMD)
+# Install all dependencies
+install: install-python install-npm
 
 # Run the Flask application
 run:
 	FLASK_APP=$(FLASK_APP) FLASK_ENV=development flask run --port 5000
-
-# Run the React application
-run-react:
-	cd $(REACT_APP_DIR) && npm run dev
-
-# Clean up Python dependencies (virtual environment not used)
+	npm run dev
+# Clean up npm dependencies
 clean:
-	@echo "No virtual environment to clean."
+	rm -rf node_modules
+	rm -f package-lock.json
 
 # Reinstall all dependencies
-reinstall: clean install npm-install
+reinstall: clean install
+
